@@ -1,0 +1,10 @@
+# Pipeline rules aligned with esp-audio-dev (.gitlab/ci/rules.yml).
+
+.if-github-push: &if-github-push
+  # main, release/v*, or version tags (v1.0 / v1.0.0 / v1.0.0-rc1). Not schedules.
+  if: '($CI_COMMIT_REF_NAME == "main" || $CI_COMMIT_BRANCH =~ /^release\/v/ || $CI_COMMIT_TAG =~ /^v\d+\.\d+(\.\d+)?($|-)/) &&
+        $CI_PIPELINE_SOURCE != "schedule"'
+
+.rules:build:push-to-github:
+  rules:
+    - <<: *if-github-push

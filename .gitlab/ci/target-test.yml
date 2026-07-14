@@ -1,0 +1,33 @@
+# Run test_apps on esp32s3 using artifacts from the build job.
+# Target-test image already has esptool/pytest. Do not fetch_idf_branch or
+# install.sh (those pull every chip toolchain and fill the ARM runner disk).
+# Same pattern as esp_led .gitlab/ci/target_test_apps.yml v6.1 jobs.
+
+test:
+  stage: target_test
+  tags:
+    - esp32s3
+  timeout: 1 hour
+  image: "${NEW_CI_IDF_DOCKER_REGISTRY}/ci/images/idf-v6.1-target-test:1"
+  needs:
+    - job: build
+      artifacts: true
+  variables:
+    IDF_TARGET: esp32s3
+  before_script:
+    - source ${PROJECT_ROOT}/tools/ci/idf_utils.sh
+    - add_gitlab_ssh_keys
+    - clone_idf ${IDF_VERSION_TAG}
+    - check_idf_version ${IDF_VERSION_TAG}
+    - export PYTHONPATH="$IDF_PATH/tools:$IDF_PATH/tools/ci/python_packages:$PYTHONPATH"
+    - git config --global --add safe.directory "$CI_PROJECT_DIR"
+    - chmod +x tools/ci/*.sh
+  script:
+    - ./tools/ci/test.sh
+  artifacts:
+    when: always
+    expire_in: 1 week
+    paths:
+      - XUNIT_RESULT.xml
+    reports:
+      junit: XUNIT_RESULT.xml

@@ -1,0 +1,7 @@
+version: "1.0"
+description: "MAX30102 PPG custom device (INT GPIO + driver)"
+
+apply:
+  - max30102_sensor.yaml
+  - esp_max30102.c
+  - setup_max30102.c

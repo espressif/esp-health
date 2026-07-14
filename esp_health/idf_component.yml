@@ -1,0 +1,26 @@
+version: "0.1.0"
+license: "LicenseRef-Espressif-Modified-MIT"
+
+description: Health sensing algorithms for Espressif SoCs
+
+url: https://github.com/espressif/esp-health/tree/main/esp_health
+repository: https://github.com/espressif/esp-health.git
+documentation: "https://github.com/espressif/esp-health/blob/main/esp_health/README.md"
+issues: https://github.com/espressif/esp-health/issues
+
+tags:
+  - adf
+  - health
+  - ppg
+  - heart_rate
+  - spo2
+
+examples:
+  - path: ./examples/heart_rate_detect
+  - path: ./examples/spo2_detect
+
+# Do not ship third-party test datasets (PhysioNet ODbL / PPG-DaLiA) in the registry tgz.
+# Git clones used by CI still contain test_apps/.
+files:
+  exclude:
+    - "test_apps/**/*"

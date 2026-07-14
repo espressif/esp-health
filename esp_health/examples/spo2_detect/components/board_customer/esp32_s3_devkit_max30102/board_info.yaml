@@ -1,0 +1,4 @@
+board: esp32_s3_devkit_max30102
+chip: esp32s3
+version: 1.0.0
+description: "ESP32-S3-DevKitC empty base board (I2C bus for external sensors)"

@@ -1,0 +1,2 @@
+# S31 bootloader exceeds 0x6000 at default 0x8000 offset; use 0xA000 (see IDF partition_table docs).
+CONFIG_PARTITION_TABLE_OFFSET=0xA000
