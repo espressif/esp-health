@@ -1,0 +1,22 @@
+# Mirror the tested revision to GitHub after target_test succeeds.
+# Only runs on main / release/v* / version tags (see .gitlab/ci/rules.yml).
+
+push_to_github:
+  stage: deploy
+  extends:
+    - .rules:build:push-to-github
+  when: on_success
+  needs:
+    - job: test
+  image: $CI_DOCKER_REGISTRY/esp32-ci-env
+  variables:
+    GIT_STRATEGY: clone
+  before_script:
+    - echo "skip default before_script"
+  script:
+    - source ${PROJECT_ROOT}/tools/ci/idf_utils.sh
+    - add_github_ssh_keys
+    - git fetch --unshallow || true
+    - git remote remove github &>/dev/null || true
+    - git remote add github git@github.com:espressif/esp-health.git
+    - tools/ci/push_to_github.sh

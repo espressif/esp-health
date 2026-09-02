@@ -1,0 +1,6 @@
+# Name,   Type, SubType, Offset,  Size, Flags
+# Offsets left blank so they track CONFIG_PARTITION_TABLE_OFFSET (0x8000 on S3, 0xA000 on S31).
+nvs,      data, nvs,     ,        0x6000,
+phy_init, data, phy,     ,        0x1000,
+factory,  app,  factory, ,        2M,
+storage,  data, spiffs,  ,        256k,

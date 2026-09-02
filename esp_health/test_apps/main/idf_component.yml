@@ -1,0 +1,6 @@
+description: ESP Health Test
+
+dependencies:
+  esp_health:
+    version: "*"
+    override_path: ../..

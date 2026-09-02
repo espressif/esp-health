@@ -1,0 +1,4 @@
+[codespell]
+skip = build,*.a
+ignore-words-list = dout
+write-changes = true

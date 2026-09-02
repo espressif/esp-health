@@ -1,0 +1,5 @@
+dependencies:
+  espressif/esp_board_manager: "~0.7"
+  esp_health:
+    version: "*"
+    override_path: "../../.."

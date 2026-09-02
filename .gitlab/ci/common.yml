@@ -1,0 +1,31 @@
+# Shared GitLab CI variables and IDF job template for esp-health.
+# IDF v6.1: same internal image + runtime clone as esp-health-src / esp_led v61
+# Scripts: tools/ci/{build,test,common,idf_utils}.sh
+
+variables:
+  GET_SOURCES_ATTEMPTS: "10"
+  ARTIFACT_DOWNLOAD_ATTEMPTS: "10"
+  GIT_DEPTH: 1
+  PROJECT_ROOT: "$CI_PROJECT_DIR"
+  IDF_CI_LABEL: "v61"
+  IDF_VERSION_TAG: "release/v6.1"
+  IDF_PATH: "/root/.espressif/esp-idf"
+  IDF_TAG_FLAG: "true"
+  BUILD_TARGET_CHIPS: "esp32s3 esp32p4 esp32s31"
+  TEST_TARGETS: "esp32s3"
+  EXTRA_PREVIEW_TARGETS: "esp32h4 esp32s31"
+
+.idf-job:
+  tags:
+    - x86_64
+  timeout: 3 hours
+  image: "${NEW_CI_IDF_DOCKER_REGISTRY}/ci/images/idf-v6.1:1"
+  before_script:
+    - source ${PROJECT_ROOT}/tools/ci/idf_utils.sh
+    - add_gitlab_ssh_keys
+    - clone_idf ${IDF_VERSION_TAG}
+    - fetch_idf_branch ${IDF_VERSION_TAG}
+    - common_before_scripts
+    - setup_tools_and_idf_python_venv
+    - git config --global --add safe.directory "$CI_PROJECT_DIR"
+    - chmod +x tools/ci/*.sh

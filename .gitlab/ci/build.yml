@@ -1,0 +1,23 @@
+# Build test_apps for s3 / p4 / s31; examples only when a matching board_customer
+# exists (currently ESP32-S3 DevKit + MAX30102).
+# Examples: install esp-bmgr-assist; stub ? set-target ? idf.py bmgr ? build
+# (see tools/ci/common.sh)
+
+build:
+  extends: .idf-job
+  stage: build
+  script:
+    - ./tools/ci/build.sh
+  artifacts:
+    when: on_success
+    expire_in: 1 week
+    paths:
+      - esp_health/test_apps/build_*/
+      - "**/build_*/*.bin"
+      - "**/build_*/*.elf"
+      - "**/build_*/flasher_args.json"
+      - "**/build_*/flash_project_args"
+      - "**/build_*/config/sdkconfig.json"
+      - "**/build_*/sdkconfig"
+      - "**/build_*/bootloader/*.bin"
+      - "**/build_*/partition_table/*.bin"

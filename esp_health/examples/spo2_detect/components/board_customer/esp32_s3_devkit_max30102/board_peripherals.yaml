@@ -1,0 +1,11 @@
+# Empty base board: only expose a shared I2C master bus.
+peripherals:
+  - name: i2c_master
+    type: i2c
+    role: master
+    config:
+      port: 0
+      enable_internal_pullup: true
+      pins:
+        sda: 19
+        scl: 20

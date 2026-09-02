@@ -1,0 +1,15 @@
+# GitLab CI for esp-health (unified prebuilt libesp_health.a under
+# esp_health/lib/<target>/)
+# Stages match esp-audio-dev: build → target_test → deploy (push_to_github).
+
+include:
+  - '.gitlab/ci/common.yml'
+  - '.gitlab/ci/rules.yml'
+  - '.gitlab/ci/build.yml'
+  - '.gitlab/ci/target-test.yml'
+  - '.gitlab/ci/deploy.yml'
+
+stages:
+  - build
+  - target_test
+  - deploy

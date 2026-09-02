@@ -1,0 +1,22 @@
+version: 1.0.0
+
+# Sensor-specific peripheral and custom device.
+# I2C bus (SDA/SCL) is defined on the empty base board.
+peripherals:
+  - name: gpio_max30102_int
+    type: gpio
+    config:
+      pin: 21
+      mode: GPIO_MODE_INPUT
+      pull_up: true
+
+devices:
+  - name: max30102_ppg
+    type: custom
+    version: default
+    config:
+      i2c_addr: 0x57
+      scl_speed_hz: 100000
+    peripherals:
+      - name: i2c_master
+      - name: gpio_max30102_int
